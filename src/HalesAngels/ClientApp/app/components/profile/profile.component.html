@@ -1,0 +1,107 @@
+
+<div id="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h2>Profile</h2>
+                </div>
+                <div class="panel-body" *ngIf="!isLoggedIn">
+                    You must be logged in to access this page.
+                </div>
+                <div class="panel-body" *ngIf="isLoggedIn">
+                    <form #form="ngForm" (ngSubmit)="saveProfile(form.value); form.reset()">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h4>First Name:</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>{{user.firstName}}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h4>Last Name:</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>{{user.lastName}}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h4>Email:</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>{{user.emailAddress}}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h4>Last Logged In:</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>{{user.lastLoggedInDt | formatDate: 'MM/DD/YYYY hh:mm A' }}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h4>External Login Type:</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>{{user.externalType}}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h4>Receive Notifications:</h4>
+                            </div>
+                            <div class="col-sm-1">
+                                <h4>{{user.receiveNotifications | yesNo: 'yesNo'}}</h4>
+                            </div>
+                            <div col-sm-8>
+                                <h4><input type="checkbox" name="notifications" [(ngModel)]="user.receiveNotifications" /></h4>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">
+                            <span class="glyphicon glyphicon-save"></span> Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            &nbsp;
+        </div>
+    </div>
+</div>
+
+<div bsModal #profileModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="profileModal.hide()">
+                    <span aria-hidden="true" class="text-primary">&times;</span>
+                </button>
+                <h4 class="modal-title">Changes Saved Successfully</h4>
+            </div>
+            <div class="modal-body">
+                Changes to your profile have been saved successfully.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #loginModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" (onHide)="dismissLoginModal()" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="loginModal.hide()">
+                    <span aria-hidden="true" class="text-primary">&times;</span>
+                </button>
+                <h4 class="modal-title">Error</h4>
+            </div>
+            <div class="modal-body">
+                You must be logged in to access this page. Please login.
+            </div>
+        </div>
+    </div>
+</div>

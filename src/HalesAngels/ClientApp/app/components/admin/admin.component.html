@@ -1,0 +1,44 @@
+
+<div id="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2>Admin</h2>
+                </div>
+                <div class="panel-body" *ngIf="!isLoggedIn || (user !== undefined && !user.isAdmin)">
+                    You must be logged in and be an administrator to access this page.
+                </div>
+                <div class="panel-body" *ngIf="isLoggedIn && user.isAdmin">
+                    <tabset>
+                        <tab heading="Articles"><article-admin-list [activeOnly]="true"></article-admin-list></tab>
+                        <tab heading="Archived Articles"><article-admin-list [activeOnly]="false"></article-admin-list></tab>
+                        <tab heading="Users"><user-list></user-list></tab>
+                        <tab heading="Comments"><comment-admin-list></comment-admin-list></tab>
+                        <tab *ngIf="user.isSystemAdmin" heading="Feedback"><feedback-list [admin]="true"></feedback-list></tab>
+                        <tab *ngIf="user.isSystemAdmin" heading="Settings"><setting></setting></tab>
+                    </tabset>
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div bsModal #loginModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" (onHide)="dismissLoginModal()" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="loginModal.hide()">
+                    <span aria-hidden="true" class="text-primary">&times;</span>
+                </button>
+                <h4 class="modal-title">Error</h4>
+            </div>
+            <div class="modal-body">
+                You must be logged in and be an administrator to access this page.
+            </div>
+        </div>
+    </div>
+</div>
